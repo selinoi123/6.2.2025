@@ -1,0 +1,104 @@
+Test SQL part B -
+Test part B question 2 -
+Question number 1 -
+SELECT genre, COUNT(*) AS movie_count
+FROM movies
+GROUP BY genre;
+
+Question number 2 -
+SELECT year, SUM(revenue) AS total_revenue
+FROM movies
+GROUP BY year;
+
+
+Question number 3 -
+SELECT genre, AVG(revenue) AS avg_revenue
+FROM movies
+GROUP BY genre;
+
+
+Question number 4 -
+SELECT genre, language, AVG(revenue) AS avg_revenue
+FROM movies
+GROUP BY genre, language;
+
+Question number 5 -
+SELECT language, COUNT(*) AS movie_count
+FROM movies
+GROUP BY language
+ORDER BY movie_count ASC;
+
+Question number 6 -
+SELECT country, COUNT(*) AS movie_count
+FROM movies
+GROUP BY country
+ORDER BY movie_count DESC;
+
+Question number 7 -
+SELECT genre, COUNT(*) AS movie_count
+FROM movies
+GROUP BY genre
+HAVING COUNT(*) > 2;
+
+
+Question number 8 -
+SELECT year, SUM(revenue) AS total_revenue
+FROM movies
+GROUP BY year
+HAVING total_revenue > 1000;
+
+Question number 9 -
+SELECT language, COUNT(*) AS movie_count
+FROM movies
+GROUP BY language
+HAVING movie_count >= 3;
+
+Test part B question 3 -
+Question number 1 -
+SELECT t.first_name, t.last_name, c.country_name
+FROM tourists t
+INNER JOIN countries c ON t.country_id = c.id;
+
+Question number 2 -
+SELECT t.first_name, t.last_name, tour.tour_name, tour.start_date, tour.end_date, tour.price
+FROM tourists t
+INNER JOIN tours tour ON t.tour_id = tour.id;
+
+Question number 3 -
+SELECT t.first_name, t.last_name, tour.tour_name, tour.start_date, tour.end_date, tour.price
+FROM tourists t
+LEFT JOIN tours tour ON t.tour_id = tour.id;
+
+Question number 4 -
+SELECT t.first_name, t.last_name, tour.tour_name, tour.start_date, tour.end_date, tour.price
+FROM tourists t
+FULL OUTER JOIN tours tour ON t.tour_id = tour.id;
+
+Question number 5 -
+SELECT first_name, last_name 
+FROM tourists
+WHERE tour_id IS NULL;
+
+DELETE FROM tourists
+WHERE tour_id IS NULL
+LIMIT 1; 
+
+Question number 6 -
+SELECT tour_name, start_date, end_date
+FROM tours
+WHERE id NOT IN (SELECT DISTINCT tour_id FROM tourists WHERE tour_id IS NOT NULL);
+
+UPDATE tours
+SET start_date = DATE(start_date, '+1 year'),end_date = DATE(end_date, '+1 year')
+WHERE id NOT IN (SELECT DISTINCT tour_id FROM tourists WHERE tour_id IS NOT NULL);
+
+Question number 7 -
+SELECT COUNT(*) AS num_tours_without_tourists
+FROM tours
+WHERE id NOT IN (SELECT DISTINCT tour_id FROM tourists WHERE tour_id IS NOT NULL);
+
+Question number 8 -
+SELECT t.first_name, t.last_name, tour.tour_name
+FROM tourists t
+CROSS JOIN tours tour;
+
